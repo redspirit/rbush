@@ -308,11 +308,11 @@ rbush.prototype = {
 
         var node = this._chooseSubtree(bbox, this.data, level, []);
 
-        var result = node.children.filter(function (_item) {
-            return _item === item;
-        });
+        // var result = node.children.filter(function (_item) {
+        //     return _item === item;
+        // });
 
-        return !result;
+        return !contains(node, bbox);
     },
 
     _insert: function (item, level, isNode) {
