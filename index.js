@@ -117,6 +117,17 @@ rbush.prototype = {
         return this;
     },
 
+    move: function (item) {
+        if (!item)
+            return this;
+        if(this._needReplace(item)) {  // нужно удалить и добавить точку
+            console.log('Replaced!');
+            this.remove(item);
+            this._insert(item, this.data.height - 1);
+        }
+        return this;
+    },
+
     insert: function (item) {
         if (item) this._insert(item, this.data.height - 1);
         return this;
@@ -287,6 +298,21 @@ rbush.prototype = {
         }
 
         return node;
+    },
+
+    _needReplace: function (item) {
+
+        var toBBox = this.toBBox,
+            bbox = toBBox(item),
+            level = this.data.height - 1;
+
+        var node = this._chooseSubtree(bbox, this.data, level, []);
+
+        var result = node.children.filter(function (_item) {
+            return _item === item;
+        });
+
+        return !result;
     },
 
     _insert: function (item, level, isNode) {
