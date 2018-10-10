@@ -121,7 +121,7 @@ rbush.prototype = {
         if (!item)
             return this;
         if(this._needReplace(item)) {  // нужно удалить и добавить точку
-            console.log('Replaced!');
+            //console.log('Replaced!');
             this.remove(item);
             this._insert(item, this.data.height - 1);
         }
