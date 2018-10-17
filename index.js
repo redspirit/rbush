@@ -120,15 +120,19 @@ rbush.prototype = {
     move: function (item, newBB) {
         if (!item)
             return this;
-        if(this._needReplace(item)) {
+
+        var needReplace = this._needReplace(item);
+
+        item.minX = newBB.minX;
+        item.minY = newBB.minY;
+        item.maxX = newBB.maxX;
+        item.maxY = newBB.maxY;
+        
+        if(needReplace) {
             this.remove(item);
             this._insert(item, this.data.height - 1);
-        } else {
-            item.minX = newBB.minX;
-            item.minY = newBB.minY;
-            item.maxX = newBB.maxX;
-            item.maxY = newBB.maxY;
         }
+
         return this;
     },
 
