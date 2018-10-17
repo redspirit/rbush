@@ -117,13 +117,17 @@ rbush.prototype = {
         return this;
     },
 
-    move: function (item) {
+    move: function (item, newBB) {
         if (!item)
             return this;
-        if(this._needReplace(item)) {  // нужно удалить и добавить точку
-            //console.log('Replaced!');
+        if(this._needReplace(item)) {
             this.remove(item);
             this._insert(item, this.data.height - 1);
+        } else {
+            item.minX = newBB.minX;
+            item.minY = newBB.minY;
+            item.maxX = newBB.maxX;
+            item.maxY = newBB.maxY;
         }
         return this;
     },
@@ -307,10 +311,6 @@ rbush.prototype = {
             level = this.data.height - 1;
 
         var node = this._chooseSubtree(bbox, this.data, level, []);
-
-        // var result = node.children.filter(function (_item) {
-        //     return _item === item;
-        // });
 
         return !contains(node, bbox);
     },
