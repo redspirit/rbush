@@ -117,8 +117,16 @@ rbush.prototype = {
         return this;
     },
 
-    needReplace: function (item) {
-        return this._needReplace(item);
+    needReplace: function (item, newBB) {
+
+        var toBBox = this.toBBox,
+            bbox = toBBox(item),
+            level = this.data.height - 1;
+
+        var node = this._chooseSubtree(bbox, this.data, level, []);
+
+        return !contains(node, newBB);
+
     },
 
     insert: function (item) {
@@ -291,17 +299,6 @@ rbush.prototype = {
         }
 
         return node;
-    },
-
-    _needReplace: function (item) {
-
-        var toBBox = this.toBBox,
-            bbox = toBBox(item),
-            level = this.data.height - 1;
-
-        var node = this._chooseSubtree(bbox, this.data, level, []);
-
-        return !contains(node, bbox);
     },
 
     _insert: function (item, level, isNode) {
