@@ -117,23 +117,8 @@ rbush.prototype = {
         return this;
     },
 
-    move: function (item, newBB) {
-        if (!item)
-            return this;
-
-        var needReplace = this._needReplace(item);
-
-        item.minX = newBB.minX;
-        item.minY = newBB.minY;
-        item.maxX = newBB.maxX;
-        item.maxY = newBB.maxY;
-        
-        if(needReplace) {
-            this.remove(item);
-            this._insert(item, this.data.height - 1);
-        }
-
-        return this;
+    needReplace: function (item) {
+        return this._needReplace(item);
     },
 
     insert: function (item) {
